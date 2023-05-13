@@ -96,7 +96,7 @@ if os.name == 'nt':
 elif os.name == 'posix':
     DLL_LOC = 'libnodave.so'
 else:
-    print 'only win and linux supportet yet'
+    print('only win and linux supportet yet')
 
 
 def int_to_bitarr(integer):
@@ -109,7 +109,7 @@ def int_to_bitarr(integer):
     string = bin(integer)[2:]
     arr = list()
     
-    for bit in xrange(8 - len(string)):
+    for bit in range(8 - len(string)):
         arr.append(0)   
     
     for bit in string:
@@ -127,7 +127,7 @@ def bitarr_to_int(bitarr):
     bitarr.reverse()
     for elem in bitarr:
         str_bitarr.append(str(elem))
-    print str_bitarr
+    print(str_bitarr)
     string = ''.join(str_bitarr)
     return int(string,2)
 
@@ -319,7 +319,7 @@ class libnodave(object):
         """
         self.read_bytes(daveCounter, 0, 0, 1)  
         counters = list()
-        for val in xrange(16):
+        for val in range(16):
             counters.append(self.dave.daveGetCounterValue(self.dc)) 
         return counters[counter_number]
     
@@ -330,7 +330,7 @@ class libnodave(object):
         """
         if self.read_bytes(daveCounter, 0, 0, 1):  
             counters = list()
-            for val in xrange(16):
+            for val in range(16):
                 counters.append(self.dave.daveGetCounterValue(self.dc)) 
             return counters
         return False
@@ -386,9 +386,9 @@ class libnodave(object):
             ein Merkerbyte als Dict zurückgeben
         """
         _l = self.get_marker_byte_list(marker)
-        print 'libnodave - merkerbyte:', _l
+        print('libnodave - merkerbyte:', _l)
         d = dict()
-        for val in xrange(8):
+        for val in range(8):
             d[val]=_l[val]
         return d
         
@@ -420,10 +420,10 @@ class libnodave(object):
         Q3 = self.get_output(0,2)
         Q4 = self.get_output(0,3)
 
-        print "Padverlichting      : " + str(Q1)
-        print "Tuinhuisverlichting : " + str(Q2)
-        print "Tuinhuis buiten     : " + str(Q3)
-        print "Terrasverlichting   : " + str(Q4)
+        print("Padverlichting      : " + str(Q1))
+        print("Tuinhuisverlichting : " + str(Q2))
+        print("Tuinhuis buiten     : " + str(Q3))
+        print("Terrasverlichting   : " + str(Q4))
         
 
 # Calling this class will launch an interactive console         
