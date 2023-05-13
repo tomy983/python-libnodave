@@ -144,7 +144,7 @@ class libnodave(object):
         self. fds = _daveOSserialType()
         self.init_dll()
         
-        self.buffer = ctypes.create_string_buffer('buffer')
+        self.buffer = ctypes.create_string_buffer(b'buffer')
         self.buffer_p = ctypes.pointer(self.buffer)
         
     def init_dll(self):
