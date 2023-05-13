@@ -14,6 +14,6 @@ setup(
   author='Wouter DHaeseleer',
   author_email='info@netdata.be',
   url='http://netdata.be',
-  dependency_links = ['https://github.com/netdata/libnodave/zipball/master'],
+  dependency_links = ['https://github.com/tomy983/libnodave/zipball/master'],
   packages=['libnodave'],
 )
