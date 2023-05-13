@@ -4,7 +4,7 @@
 
 Compile and install the libnodave c libs
 
-    git clone git://github.com/netdata/libnodave.git 
+    git clone git://github.com/tomy983/libnodave.git 
     cd libnodave
     make
     sudo make install
