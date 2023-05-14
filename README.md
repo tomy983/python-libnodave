@@ -8,9 +8,13 @@ Compile and install the libnodave c libs
     cd libnodave
     make
     sudo make install
-
+    cd ..
+    git clone https://github.com/netdata-be/python-libnodave.git
+    cd python-libnodave
+    sudo python3 setup.py install
+    
 Install the python wrapper to your system
 
-    python setup.py install
+    sudo python3 example.py
 
 
