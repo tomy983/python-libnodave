@@ -14,6 +14,7 @@ import os
 import code
 import readline
 import atexit
+import struct
 
 
     # copied constants from nodave.h
@@ -309,6 +310,7 @@ class libnodave(object):
             returns True if pointer is set
         """
         res = self.dave.daveReadBytes(self.dc, area, db, start, len, self.buffer)
+       #  print(self.dave.daveGetU8(self.dc))
         if res == 0:
             return True
         return False
@@ -334,6 +336,17 @@ class libnodave(object):
                 counters.append(self.dave.daveGetCounterValue(self.dc)) 
             return counters
         return False
+        
+    def get_db_byte(self,db_num, db_byte_iniz, db_byte_qta):
+        """
+           descrizione
+        """
+        if self.read_bytes(daveDB, db_num, db_byte_iniz, db_byte_qta):
+          res = []
+          for x in range(db_byte_qta):
+            res.append(self.dave.daveGetU8(self.dc))
+          return res
+        return 'ko'
     
     def get_marker_byte(self, marker):
         """
@@ -343,13 +356,13 @@ class libnodave(object):
         """
         if self.read_bytes(daveFlags, 0, marker, 1):
             return self.dave.daveGetU8(self.dc)
-        return -1
+        return 'ko'
         
     def get_output_byte(self, output):
 
         if self.read_bytes(daveOutputs, 0, output, 1):
             return self.dave.daveGetU8(self.dc)
-        return -1
+        return 'ko'
     
     def get_marker(self, marker, byte):
         """
@@ -386,11 +399,87 @@ class libnodave(object):
             ein Merkerbyte als Dict zurückgeben
         """
         _l = self.get_marker_byte_list(marker)
-        print('libnodave - merkerbyte:', _l)
+    #    print('libnodave - merkerbyte:', _l)
         d = dict()
         for val in range(8):
             d[val]=_l[val]
         return d
+        
+    def get_int_db(self, db_num, merker):
+        """
+           descrizione
+        """
+        if self.read_bytes(daveDB, db_num, merker, 2):
+          res = []
+          for x in range(2):
+            res.append(self.dave.daveGetU8(self.dc))
+          res = int.from_bytes(res, byteorder='big', signed=True)
+          return res
+        return 'ko'
+        
+    def get_dint_db(self, db_num, merker):
+        """
+           descrizione
+        """
+        if self.read_bytes(daveDB, db_num, merker, 4):
+          res = []
+          for x in range(4):
+            res.append(self.dave.daveGetU8(self.dc))
+          res = int.from_bytes(res, byteorder='big', signed=True)
+          return res
+        return 'ko'    
+        
+    def get_int_mem(self, merker):
+        """
+           descrizione
+        """
+        if self.read_bytes(daveFlags, 0, merker, 2):
+          res = []
+          for x in range(2):
+            res.append(self.dave.daveGetU8(self.dc))
+          res = int.from_bytes(res, byteorder='big', signed=True)
+          return res
+        return 'ko'    
+        
+    def get_dint_mem(self, merker):
+        """
+           descrizione
+        """
+        if self.read_bytes(daveFlags, 0, merker, 4):
+          res = []
+          for x in range(4):
+            res.append(self.dave.daveGetU8(self.dc))
+          res = int.from_bytes(res, byteorder='big', signed=True)
+          return res
+        return 'ko' 
+        
+    def get_real_db(self, db_num, merker):
+        """
+           descrizione
+        """
+        if self.read_bytes(daveDB, db_num, merker, 4):
+          res = []
+          for x in range(4):
+            res.append(self.dave.daveGetU8(self.dc))
+          res = bytearray(res)
+          res = struct.unpack('>f', res)
+          return res
+        return 'ko'
+        
+    def get_real_mem(self, merker):
+        """
+           descrizione
+        """
+        if self.read_bytes(daveFlags, 0, merker, 4):
+          res = []
+          for x in range(4):
+            res.append(self.dave.daveGetU8(self.dc))
+          res = bytearray(res)
+          res = struct.unpack('>f', res)
+          return res
+        return 'ko'
+        
+                           
         
     def write_marker_byte(self, marker, value):
         """
