@@ -13,8 +13,8 @@ Compile and install the libnodave c libs
     cd python-libnodave
     sudo python3 setup.py install
     
-Install the python wrapper to your system
+Try it (example tested on S7 CPU315 with 700-751-8MD21 MPI to RS232 adapter by Systeme Helmholz
 
     sudo python3 example.py
 
-
+*Changes to the __init__.py must be followed by "sudo python3 setup.py install"
